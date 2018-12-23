@@ -1,0 +1,219 @@
+/**
+ * Interface for the abstract class Vehicle and Tool
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public interface Product {
+    // abstract methods for returning name and price of products
+    String getName();
+    double getPrice();
+}
+
+/**
+ * Abstract class that implements the interface Product
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public abstract class Vehicle implements Product {
+    // initialize instance variables
+    public String name;
+    public double price;
+    // constructor
+    public Vehicle(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+    // defines implemented class to get the name
+    public String getName() {
+        return name;
+    }
+    // defines implemented class to get the price
+    public double getPrice() {
+        return price;
+    }
+    // abstract method that will be overriden by subclasses
+    public abstract double drive();
+}
+
+/**
+ * Abstract class that implements the interface Product and Comparable<T>
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class Tool implements Product, Comparable<Tool> {
+    // initializes instance variables
+    public String name;
+    public double price;
+    public Tool(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+    // defines implemented class to get the name
+    public String getName() {
+        return name;
+    }
+    // defines implemented class to get the price
+    public double getPrice() {
+        return price;
+    }
+    // compareTo method that compares the objects based off price
+    public int compareTo(Tool obj) {
+        if (price < obj.price) {
+            return -1;
+        } else if (price == obj.price) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+    // overrides equals() to return a string based off the output of compareTo()
+    public String equals(Tool obj) {
+        if (compareTo(obj) < 0) {
+            return "The first " + name + " is least expensive with a cost of $"
+                   + price + ".";
+        } else if (compareTo(obj) > 0) {
+            return "The second " + name + " is least expensive with a cost of $"
+                   + price + ".";
+        } else {
+            return "The two " + name + "s are the same price at $"
+                   + price + ".";
+        }
+    }
+}
+
+/**
+ * Concrete class of abstract class Vehicle
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class Tesla extends Vehicle {
+    // initializes instance variables
+    public double distance, speed, batteryLife;
+    public Tesla(double distance, double speed, String name, double price) {
+        // inherits name and price from Vehicle class
+        super(name, price);
+        this.distance = distance;
+        this.speed = speed;
+    }
+    // getter method for distance (not needed just added for fun)
+    public double getDistance() {
+        return distance;
+    }
+    // getter method for speed (not needed just added for fun)
+    public double getSpeed() {
+        return speed;
+    }
+    
+    /* finds batteryLife by taking # of miles the car can go with one charge
+     minus distance, divided by total amount it can go to get a percentage
+     this method is not necessary to the purpose of this code but was added
+     to differentiate between the concrete classes */
+    public double getBatteryLife() {
+        batteryLife = ((400.0 - distance) / 400.0);
+        return batteryLife;
+    }
+    // defines abstract method by finding time (distance divided by speed)
+    public double drive() {
+        return (distance / speed);
+    }
+}
+
+/**
+ * Concrete class of abstract class Vehicle
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class Lamborghini extends Vehicle {
+    // initializes instance variables
+    public double distance, speed;
+    public Lamborghini(double distance, double speed, String name, double price) {
+        // inherits name and price from Vehicle class
+        super(name, price);
+        this.distance = distance;
+        this.speed = speed;
+    }
+    // getter method for distance (not needed just added for fun)
+    public double getDistance() {
+        return distance;
+    }
+    // getter method for speed (not needed just added for fun)
+    public double getSpeed() {
+        return speed;
+    }
+    // defines abstract method by finding time (distance divided by speed)
+    public double drive() {
+        return (distance / speed);
+    }
+}
+
+/**
+ * Tester class for all the different products
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+// imports necessary files
+import java.util.*;
+public class Tester {
+    public static void main(String args[] ) {
+        // creates an arrayLsit using List
+        List<Product> a = new ArrayList<Product>();
+        // initializes all of the objects for each class
+        Vehicle car1 = new Lamborghini(5, 202,"Gallardo", 80000);
+        Vehicle car2 = new Lamborghini(5, 202, "Gallardo", 100000);
+        Vehicle car3 = new Tesla(5, 155, "Model S", 35000);
+        Vehicle car4 = new Tesla(5, 155, "Model S", 40000);
+        Vehicle car5 = new Tesla(5, 155, "Model S", 30250);
+        Vehicle car6 = new Tesla(5, 130, "Model X", 79500);
+        Tool tool1 = new Tool("Hammer", 10);
+        Tool tool2 = new Tool("Hammer", 10);
+        Tool tool3 = new Tool("Saw", 20);
+        // adds each object into the List
+        a.add(car1);
+        a.add(car2);
+        a.add(car3);
+        a.add(car4);
+        a.add(car5);
+        a.add(car6);
+        a.add(tool1);
+        a.add(tool2);
+        a.add(tool3);
+        // displays Inventory results
+        System.out.printf("%27s%n", "Inventory");
+        System.out.println("-----------------------------------------------");
+        // calls takeInventory method
+        System.out.println(takeInventory(a, "Gallardo"));
+        System.out.println(takeInventory(a, "Model S"));
+        System.out.println(takeInventory(a, "Model X"));
+        System.out.println(takeInventory(a, "Hammer"));
+        System.out.println(takeInventory(a, "Saw"));
+        // displays tool comparison results
+        System.out.println("");
+        System.out.printf("%32s%n", "Comparing the Tools");
+        System.out.println("-----------------------------------------------");
+        System.out.println(tool1.equals(tool2));
+    }
+    // method that takes inventory by returning a string containing
+    // the total price and quantity of objects
+    public static String takeInventory(List<Product> a, String name) {
+        // initializes variables
+        int count = 0;
+        double totalPrice = 0;
+        // goes through List and checks to see if names match given name
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i).getName() == name) {
+                // if so the quantity goes up and price is added to the total
+                count++;
+                totalPrice += a.get(i).getPrice();
+            }
+        }
+        // returns string with the results
+        return name + ": Quantity = " + count + ", Total cost = $" +
+               totalPrice;
+    }
+}
