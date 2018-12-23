@@ -1,0 +1,225 @@
+
+ /**
+ * This class tests the JeanJacket class that 
+ *  implements the JeanEffects interface.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+import java.util.*;
+
+public class TestJacket3
+{
+    public static void main(String []args)
+    {   
+        List<JeanJacket3> jacketList = new ArrayList<JeanJacket3>();
+	     
+	    jacketList.add( new JeanJacket3(10));
+	    jacketList.get(0).design();
+	    jacketList.get(0).fadeJeans("moderately worn");
+	    jacketList.get(0).addHoles("back");
+	     
+        jacketList.add( new JeanJacket3(20));
+	    jacketList.get(1).design();
+        jacketList.get(1).fadeJeans("hipster");
+	    jacketList.get(1).addHoles("elbows");
+	     
+        jacketList.add( new JeanJacket3(30));
+        jacketList.get(2).design();
+        jacketList.get(2).fadeJeans("none");
+	    jacketList.get(2).addHoles("shoulders");    
+
+	    for(JeanJacket3 j: jacketList)
+	    {
+	        System.out.println(j);
+	        System.out.println();
+	    }
+    }
+}
+
+ /**
+ * This class defines a JeanJacket by implementing 
+ *  the JeanEffect interface.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public class JeanJacket3 implements JeanEffects3
+{
+    // instance variables
+    private int numBeads;
+    private String pattern;
+    private String holeLocation;
+    private String fadeLevel;
+
+    // Constructor for objects of class JeanJacket
+    public JeanJacket3(int numBeads)
+    {
+        // initialize instance variables
+        this.numBeads = numBeads;
+        this.pattern = "none";
+        this.holeLocation = "none";
+        this.fadeLevel = "none";
+        
+    }
+
+    public void design()
+    {
+        if (numBeads == 10)
+            pattern = "circle";
+        else if (numBeads == 20)
+            pattern = "heart";
+        else if (numBeads == 30)
+            pattern = "spiral";
+        else
+            pattern = "random";
+    }
+    
+    public void fadeJeans(String level)
+    {
+        fadeLevel = level;
+    }
+    
+    public void addHoles(String loc)
+    {
+        holeLocation = loc;
+    }
+    
+    public int getNumBeads()
+    {
+        return numBeads;
+    }
+    
+    public String getPattern()
+    {
+        return pattern;
+    }
+    
+    public String toString()
+    {
+        String out = "This jacket has " + numBeads + " beads in a " + pattern + " with "
+                    + "\na fade level of " + fadeLevel + " and holes in the " + holeLocation + ".";
+        return out;
+    }
+}
+
+ /**
+ * The JeanEffects class is an interface
+ * with two abstract methods.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public interface JeanEffects3
+{
+    public abstract void fadeJeans(String s);
+    public abstract void addHoles(String s); 
+}
+
+/**
+ * This class defines a FadedJean object that
+ * extends a basic pair of jeans and
+ * implements the JeanEffects interface.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public class FadedJean3 extends BasicJean3 implements JeanEffects3
+{
+    // instance variables
+    private String fadeLocation;
+   
+    // Constructor for objects of class FadedJean
+    public FadedJean3(int numPocket, String loc)
+    {
+        // initialize instance variables
+        super(numPocket);
+        fadeLocation = loc;
+    }
+    
+    public void design()
+    {
+        fadeJeans(fadeLocation);
+    }
+
+    public void fadeJeans(String loc)
+    {
+        fadeLocation = loc;
+    }
+
+    public void addHoles(String loc)
+    {
+        // do nothing
+    }
+    
+    public String toString()
+    {
+        return "This pair of jeans has " + getNumPockets() + " pockets" 
+               + "\n and has faded " + fadeLocation + ".";
+    }
+}
+
+/**
+ * This class is an abstract class defining a 
+ * a basic pair of jeans
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public abstract class BasicJean3
+{
+    // instance variables
+    private int numPockets;
+
+    // Constructor for the abstract class BasicJean
+    public BasicJean3(int numPockets)
+    {
+        // initialize instance variables
+        this.numPockets = numPockets;
+    }
+
+    public abstract void design();
+
+    public int getNumPockets()
+    {
+        return numPockets;
+    }
+
+    public void setNumPockets(int numPockets)
+    {
+       this.numPockets = numPockets;
+    }
+}
+
+ /**
+ * This class tests the FadedJean class.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+import java.util.*;
+public class TestFadedJean3
+{
+    public static void main(String []args)
+    {          
+        List<FadedJean3> jeanList = new ArrayList<FadedJean3>();
+       
+        jeanList.add( new FadedJean3(0, "knees"));
+        jeanList.get(0).design();
+        
+        jeanList.add( new FadedJean3(4, "pant legs"));
+        jeanList.get(1).design();
+
+        for (FadedJean3 j: jeanList)
+        {
+            System.out.println(j);
+            System.out.println();
+        }
+    }
+}
