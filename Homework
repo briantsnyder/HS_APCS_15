@@ -1,0 +1,235 @@
+/**
+ * Modify the Homework Assignment to include the Comparable<T> interface
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public abstract class HomeworkV4 implements ProcessingV4, Comparable<HomeworkV4>  {
+    // declares instant variables
+    public int numPages;
+    public int pagesRead;
+    public String homeworkType;
+    
+    // constructor setting variables to defaults
+    public HomeworkV4() {
+        numPages = 0;
+        pagesRead = 0;
+        homeworkType = "none";
+    }
+    // abstract method that will be overriden in other classes
+    public abstract void createAssignment(int numPages);
+    // getter method for the # of pages to read
+    public int getNumPages() {
+        return numPages;
+    }
+    // getter method for # of pages read
+    public int getPagesRead() {
+        return pagesRead;
+    }
+    // setter method for the # of pages
+    public void setNumPages(int numPages) {
+        this.numPages = numPages;
+    }
+    // implements compareTo to compare # of pages for HW
+    public int compareTo(HomeworkV4 obj) {
+        if (numPages < obj.numPages) {
+            return -1;
+        } else if (numPages == obj.numPages) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+    // overrides equals() method to print corresponding strings depending on
+    // which class has more/less/equal homework
+    public String equals(HomeworkV4 obj) {
+        if (compareTo(obj) < 0) {
+            return "The homework for " + homeworkType +
+                   " has LESS pages to read than " + obj.homeworkType + ".";
+        } else if (compareTo(obj) > 0) {
+            return "The homework for " + homeworkType +
+                   " has MORE pages to read than " + obj.homeworkType+ ".";
+        } else {
+            return "The homework for " + homeworkType + " and " +
+                   obj.homeworkType + " are the SAME number of pages.";
+        }
+    }
+}
+
+/**
+ * Class for History homework
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class HistoryV4 extends HomeworkV4 {
+    private int pagesRead;
+    // class extends Homework, so it uses its same constructor
+    public HistoryV4() {
+        pagesRead = 0;
+    }
+    // overriden method that creates an assignment based off parameter
+    public void createAssignment(int numPages) {
+        this.numPages = numPages;
+        homeworkType = "History";
+    }
+    // toString method that prints assignment
+    public String toString() {
+        return "\nBefore reading: " + homeworkType + " - " + (numPages + pagesRead) + " pages to read." +
+                                 "\nAfter reading: " + homeworkType + " - " + numPages + 
+                                 " pages to read.";
+    }
+    // updates the # of pages read
+    public void doHomework(int pagesRead) {
+        this.numPages = this.numPages - pagesRead;
+        this.pagesRead = pagesRead;
+    }
+}
+
+/**
+ * Class for Computer Science Homework
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class ComputerScienceV4 extends HomeworkV4 {
+    // class extends Homework, so it uses its same constructor
+    public ComputerScienceV4() {
+    }
+    // overriden method that creates an assignment based off parameter
+    public void createAssignment(int numPages) {
+        this.numPages = numPages;
+        homeworkType = "Computer Science";
+    }
+    // toString method that prints assignment
+    public String toString() {
+        return "\nBefore reading: " + homeworkType + " - " + (numPages + pagesRead) + " pages to read." +
+                                 "\nAfter reading: " + homeworkType + " - " + numPages + 
+                                 " pages to read.";
+    }
+    // updates the # of pages to read
+    public void doHomework(int pagesRead) {
+        this.numPages = this.numPages - pagesRead;
+        this.pagesRead = pagesRead;
+    }
+}
+
+/**
+ * Class for Algebra homework
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class AlgebraV4 extends HomeworkV4{
+    // class extends Homework, so it uses its same constructor
+    public AlgebraV4() {
+    }
+    // overriden method that creates an assignment based off parameter
+    public void createAssignment(int numPages) {
+        this.numPages = numPages;
+        homeworkType = "Algebra";
+    }
+    // toString method that prints assignment
+    public String toString() {
+        return "\nBefore reading: " + homeworkType + " - " + (numPages + pagesRead) + " pages to read." +
+                                 "\nAfter reading: " + homeworkType + " - " + numPages + 
+                                 " pages to read.";
+    }
+    // updates the # of pages to read
+    public void doHomework(int pagesRead) {
+        this.numPages = this.numPages - pagesRead;
+        this.pagesRead = pagesRead;
+    }
+}
+
+/**
+ * Class for Physics homework
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public class PhysicsV4 extends HomeworkV4 {
+   // class extends Homework, so it uses its same constructor
+   public PhysicsV4() {
+   }
+   // overriden method that creates an assignment based off parameter
+   public void createAssignment(int numPages) {
+        this.numPages = numPages;
+        homeworkType = "Physics";
+   }
+   // toString method that prints assignment
+   public String toString() {
+        return "\nBefore reading: " + homeworkType + " - " + (numPages + pagesRead) + " pages to read." +
+                                 "\nAfter reading: " + homeworkType + " - " + numPages + 
+                                 " pages to read.";
+   }
+   // updates the # of pages to read
+   public void doHomework(int pagesRead) {
+       this.numPages = this.numPages - pagesRead;
+       this.pagesRead = pagesRead;
+   }
+}
+
+/**
+ * Interface used for HomeworkV4 class
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+public interface ProcessingV4 {
+    // abstract method that updates the remaining # of pages to read
+    void doHomework(int pagesRead);
+}
+
+/**
+ * Tester class for Homework Class
+ *
+ * Brian Snyder
+ * 2/19/18
+ */
+// imports necessary files
+import java.util.*;
+public class HomeworkTesterV4 {
+    public static void main (String args[]) {
+        // creates arrayList of homework objects
+        List<HomeworkV4> a = new ArrayList<HomeworkV4>();
+        // Initializes subclass of Homework and creates assignment and adds it to arrayList
+        AlgebraV4 hw1 = new AlgebraV4();
+        hw1.createAssignment(5);
+        hw1.doHomework(2);
+        a.add(hw1);
+        // Initializes subclass of Homework and creates assignment and adds it to arrayList
+        PhysicsV4 hw2 = new PhysicsV4();
+        hw2.createAssignment(10);
+        hw2.doHomework(5);
+        a.add(hw2);
+        // Initializes subclass of Homework and creates assignment and adds it to arrayList
+        HistoryV4 hw3 = new HistoryV4();
+        hw3.createAssignment(15);
+        hw3.doHomework(10);
+        a.add(hw3);
+        // Initializes subclass of Homework and creates assignment and adds it to arrayList
+        ComputerScienceV4 hw4 = new ComputerScienceV4();
+        hw4.createAssignment(3);
+        hw4.doHomework(1);
+        a.add(hw4);
+        // Displays results
+        System.out.printf("%29s%n", "My Homework Reading To-Do");
+        System.out.println("-----------------------------------");
+        for (int i = 0; i < a.size(); i++) {
+            System.out.println(a.get(i));
+        }
+        /* Displays results for comparison of homework
+        // I used an overriden equals() method that calls compareTo() to make
+         the code simpler */
+        System.out.println("");
+        System.out.printf("%29s%n", "Comapring My Homework");
+        System.out.println("-----------------------------------");
+        System.out.println(hw1.equals(hw2));
+        System.out.println(hw1.equals(hw3));
+        System.out.println(hw1.equals(hw4));
+        System.out.println(hw2.equals(hw3));
+        System.out.println(hw2.equals(hw4));
+        System.out.println(hw3.equals(hw4));
+    }
+}
