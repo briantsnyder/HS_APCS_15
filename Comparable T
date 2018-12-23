@@ -1,0 +1,156 @@
+ /**
+ * This class tests the concreate BeadedJean class that
+ * extents the abstract class BasicJean.
+ *
+ * The compareTo and equals methods will be demonstrated.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public class JeanTester4
+{
+    public static void main(String []args)
+    {
+        BeadedJean4 pair1 = new BeadedJean4(3, 10, 10);
+        BeadedJean4 pair2 = new BeadedJean4(3, 30, 10);
+
+        pair1.design();
+        pair2.design();
+
+        System.out.println("My Jeans:");
+        System.out.println(pair1);
+        System.out.println(pair2);
+
+        System.out.println();
+        System.out.println("How do the jeans compare?");
+        if(pair1.compareTo( pair2) == 0 )
+            System.out.println("They are the same size using compareTo().");
+        else
+            System.out.println("They are not the same size using compareTo().");
+            
+        System.out.println();
+        System.out.println("Are the jeans equal?");
+        if( pair1.equals(pair2) )
+            System.out.println("They are the same using equals().");
+        else
+            System.out.println("They are not the same using equals().");
+    }
+}
+
+/**
+ * This class BeadedJean is a BasicJean with beads designed in a pattern
+ * and implements an equals method.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public class BeadedJean4 extends BasicJean4
+{
+    // instance variables
+    private int numBeads;
+    private String pattern;
+
+    // Constructor for objects of class BeadedJean
+    public BeadedJean4(int numPockets, int numBeads, int pantSize)
+    {
+        // initialize instance variables
+        super(numPockets, pantSize);
+        this.numBeads = numBeads;
+        this.pattern = "none";
+    }
+
+    public void design()
+    {
+        if(numBeads <= 10)
+            pattern = "circle";
+        else if(numBeads <= 20)
+            pattern = "heart";
+        else if(numBeads <= 30)
+            pattern = "spiral";
+        else 
+            pattern = "random";
+    }
+
+    public int getNumBeads()
+    {
+        return numBeads;
+    }
+
+    public String getPattern()
+    {
+        return pattern;
+    }
+
+    public String toString()
+    {
+        return "This pair of size " + getSize() + " Jeans uses " + numBeads + " beads in a "
+                + pattern + " pattern.";
+    }
+
+    public boolean equals(BeadedJean4 obj)
+    {
+        if( !(obj instanceof BeadedJean4))
+            return false;
+            
+        BeadedJean4 j = (BeadedJean4)obj;
+        
+        if((compareTo(obj) == 0) && (pattern.equals(obj.pattern)))
+            return true;
+        else
+            return false;
+    }
+}
+
+/**
+ * This class is an abstract class defining a
+ * a basic pair of jeans and defines a
+ * compareTo method based on pant size.
+ *
+ * @author Herman Hollerith
+ * @version 06/15/17
+ */
+
+public abstract class BasicJean4 implements Comparable<BasicJean4>
+{
+    // instance variables
+    private int numPockets;
+    private int pantSize;
+
+    // Constructor for the abstract class BasicJean
+    public BasicJean4(int numPockets, int pantSize)
+    {
+        // initialize instance variables
+        this.numPockets = numPockets;
+        this.pantSize = pantSize;
+    }
+
+    public abstract void design();
+
+    public int compareTo(BasicJean4 obj)
+    {
+        if(pantSize < obj.pantSize)
+            return -1;
+        else if(pantSize == obj.pantSize)
+            return 0;
+        else
+            return 1;
+    }
+
+    public int getNumPockets()
+    {
+        return numPockets;
+    }
+
+    public void setNumPockets(int n)
+    { 
+        numPockets = n;
+    }
+
+    public int getSize()
+    {
+        return pantSize;
+    }
+}
+
